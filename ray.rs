@@ -1,4 +1,4 @@
-use crate::vec3::{self, Vec3};
+use crate::vec3;
 
 // Struct 
 #[derive(Clone, Copy)]
@@ -11,14 +11,7 @@ pub struct Ray
 
 impl Ray
 {
-    pub fn new(origin: vec3::Vec3, direction: vec3::Vec3) -> Self
-    {
-        Ray 
-        {
-            orig : origin,
-            direc : direction
-        }
-    }
+    
 
     pub fn origin(self) -> vec3::Vec3
     {
@@ -30,8 +23,8 @@ impl Ray
         return self.direc;
     }
 
-    pub fn at(self, t : f64) -> vec3::Vec3
+    pub fn _at(self, t : f64) -> vec3::Vec3
     {
-        return (self.orig + self.direc*t);
+        return self.orig + self.direc*t;
     }
 }

@@ -2,6 +2,7 @@
 use std::ops::Add;
 use std::ops::Mul;
 use std::ops::Div;
+use std::ops::Sub;
 
 
 #[derive(Clone, Copy)]
@@ -23,6 +24,17 @@ impl Add for Vec3
         Vec3 {x: self.x + other.x, y : self.y + other.y, z: self.z + other.z}
     }
 }
+
+impl Sub for Vec3 {
+    
+    type Output = Vec3;
+
+    fn sub(self, other: Vec3) -> Vec3
+    {
+        Vec3 { x: (self.x - other.x), y: (self.y - other.y), z: (self.z - other.z) }
+    }
+}
+
 
 impl Mul<f64> for Vec3
 {
@@ -51,7 +63,7 @@ impl Vec3
 {
     pub fn length(self) -> f64
     {
-        return (self.x*self.x + self.y*self.y + self.z*self.y).sqrt();
+        return (self.x*self.x + self.y*self.y + self.z*self.z).sqrt();
     }
 
     
@@ -64,10 +76,7 @@ pub fn dot_product(u:Vec3, v:Vec3) -> f64
     return u.x*v.x + u.y*v.y + u.z*v.z;
 }
 
-pub fn clone_vector(u:Vec3) -> Vec3
-{
-    return Vec3 { x: (u.x), y: (u.y), z: (u.z) }
-}
+
 
 pub fn normalized_vector(u:Vec3) -> Vec3
 {
