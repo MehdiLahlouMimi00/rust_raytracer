@@ -23,7 +23,7 @@ impl Ray
         return self.direc;
     }
 
-    pub fn _at(self, t : f64) -> vec3::Vec3
+    pub fn at(self, t : f64) -> vec3::Vec3
     {
         return self.orig + self.direc*t;
     }

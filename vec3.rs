@@ -4,6 +4,8 @@ use std::ops::Mul;
 use std::ops::Div;
 use std::ops::Sub;
 
+use crate::utils;
+
 
 #[derive(Clone, Copy)]
 pub struct Vec3
@@ -66,7 +68,15 @@ impl Vec3
         return (self.x*self.x + self.y*self.y + self.z*self.z).sqrt();
     }
 
-    
+    pub fn random_vector() -> Vec3
+    {
+        return Vec3 { x: utils::random(), y: utils::random() , z: utils::random() };
+    }
+
+    pub fn random_vector_between(min : f64, max : f64) -> Vec3
+    {
+        return Vec3 { x: utils::random_between(min, max), y: utils::random_between(min, max), z: utils::random_between(min, max) };
+    }
 
 }
 
@@ -81,4 +91,47 @@ pub fn dot_product(u:Vec3, v:Vec3) -> f64
 pub fn normalized_vector(u:Vec3) -> Vec3
 {
     return u/u.length();
+}
+
+pub fn random_in_unit_sphere() -> Vec3
+{
+    loop
+    {
+        let p = Vec3::random_vector_between(-1., 1.);
+        if p.length() * p.length() < 1.
+        {
+            return p;
+        }
+    }
+}
+
+
+pub fn random_unit_vector() -> Vec3
+{
+    return normalized_vector(random_in_unit_sphere());
+}
+
+pub fn random_on_hemisphere(normal : Vec3) -> Vec3
+{
+    let on_unit_sphere = random_unit_vector();
+
+    if dot_product(on_unit_sphere, normal) > 0.
+    {
+        return on_unit_sphere;
+    }
+
+    else
+    {
+        return on_unit_sphere* (-1.);
+    }
+
+}
+
+
+pub fn cross(one : &Vec3, other: &Vec3) -> Vec3 {
+    let cross_x = one.y * other.z - one.z * other.y;
+    let cross_y = one.z * other.x - one.x * other.z;
+    let cross_z = one.x * other.y - one.y * other.x;
+
+    return Vec3 {x :cross_x, y : cross_y, z : cross_z}
 }
